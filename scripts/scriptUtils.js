@@ -16,12 +16,12 @@ const isOnlyHanzi = (string, exceptions = '') => {
     const exceptionsRegexp = new RegExp(`[${escapeRegExp(exceptions)}]`, 'giu');
     searchStr = searchStr.replace(exceptionsRegexp, '');
   }
-  return !searchStr.split('').find(char => !hasHanzi(char));
+  return !searchStr.split('').find((char) => !hasHanzi(char));
 };
-const trim = text => text.replace(/^\s+|\s+$/giu, '');
-const fixNewlines = text => `${trim(text)}\n`;
+const trim = (text) => text.replace(/^\s+|\s+$/giu, '');
+const fixNewlines = (text) => `${trim(text)}\n`;
 
-const formatFullPatternName = text => `${text.replace(/matcher.*/giu, '')}Pattern`;
+const formatFullPatternName = (text) => `${text.replace(/matcher.*/giu, '')}Pattern`;
 
 const requestWithCache = async (url, cacheDir = path.resolve(__dirname, '../cache')) => {
   const md5 = crypto.createHash('md5').update(url).digest('hex');
@@ -35,9 +35,9 @@ const requestWithCache = async (url, cacheDir = path.resolve(__dirname, '../cach
   return result;
 };
 
-const getNumHanzi = str => str.split('').filter(hasHanzi).length;
+const getNumHanzi = (str) => str.split('').filter(hasHanzi).length;
 
-const isPatternFileWriteable = fileName => {
+const isPatternFileWriteable = (fileName) => {
   if (fs.existsSync(fileName)) {
     const contents = fs.readFileSync(fileName, 'utf-8');
     return contents.indexOf(AUTOGEN_MARKER) >= 0;
@@ -57,13 +57,13 @@ const writeOutTemplate = (fileName, template, force) => {
   return false;
 };
 
-const getPatternIndexRequireLine = matcherName =>
+const getPatternIndexRequireLine = (matcherName) =>
   `exports.${matcherName} = require('./${matcherName}');`;
 
-const getPatternFileName = fullPatternName =>
+const getPatternFileName = (fullPatternName) =>
   path.resolve(__dirname, `../src/patterns/${fullPatternName}.js`);
 
-const getPatternTestFileName = fullPatternName =>
+const getPatternTestFileName = (fullPatternName) =>
   path.resolve(__dirname, `../src/patterns/${fullPatternName}.test.js`);
 
 const rewriteFileContents = (fileName, rewriteFunc) => {
@@ -71,7 +71,7 @@ const rewriteFileContents = (fileName, rewriteFunc) => {
   fs.writeFileSync(fileName, rewriteFunc(contents));
 };
 
-const rewritePatternIndex = rewriteFunc => {
+const rewritePatternIndex = (rewriteFunc) => {
   const matchersIndexFile = path.resolve(__dirname, '../src/patterns/index.js');
   rewriteFileContents(matchersIndexFile, rewriteFunc);
 };
@@ -98,7 +98,7 @@ const writeOutPattern = (fullPatternName, mainTemplate, testTemplate, force = fa
   const testWritten = writeOutTemplate(testFileName, testTemplate, force);
   let indexWritten = true;
 
-  rewritePatternIndex(indexContents => {
+  rewritePatternIndex((indexContents) => {
     if (indexContents.indexOf(`exports.${fullPatternName}`) >= 0) {
       console.log('Pattern already exists in index. Skipping.');
       indexWritten = false;

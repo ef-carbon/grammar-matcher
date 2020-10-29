@@ -8,8 +8,7 @@ module.exports = class CoreNLPClient {
 
   async parse(text) {
     const annotatorsStr = this.annotators.join(',');
-    const url = `${this
-      .host}?properties={"annotators": "${annotatorsStr}"}&pipelineLanguage=zh`;
+    const url = `${this.host}?properties={"annotators": "${annotatorsStr}"}`;
     const response = await request({
       method: 'POST',
       uri: url,

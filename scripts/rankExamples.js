@@ -5,7 +5,7 @@ const GrammarMatcher = require('../src/GrammarMatcher');
 const grammarPattern = new GrammarMatcher(process.env.NLP_HOST);
 const examples = Object.values(patterns)
   .reduce((acc, pattern) => acc.concat(pattern.examples), [])
-  .map(ex => ex.zh);
+  .map((ex) => ex.zh);
 
 program
   .usage('yarn run rank-examples')

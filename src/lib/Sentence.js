@@ -5,6 +5,7 @@ module.exports = class Sentence {
   }
 
   get text() {
-    return this.tokens.map(token => token.word).join('');
+    return this.original;
+    // return this.tokens.map((token) => token.word).join(' ');
   }
 };

@@ -1,7 +1,7 @@
 /**
-* Given an array of locs, combine adject locs into 1 bigger index
-*/
-const combineAdjacentLocs = locs => {
+ * Given an array of locs, combine adject locs into 1 bigger index
+ */
+const combineAdjacentLocs = (locs) => {
   if (locs.length <= 1) {
     return locs;
   }
@@ -39,13 +39,13 @@ const locFromToken = (token, matchCharsStr = null) => {
 exports.locFromToken = locFromToken;
 
 /**
-* Extract match locations from a returned list of token matches
-*
-* @param {Tokens[][]|null} the tokens representing the match
-* @param {matchCharsStr} an optional string containing characters to further filter the resulting locs.
-*     Useful if tokens might contain extra characters besides just those we want to match
-* @returns {Location[][]|null} The 
-*/
+ * Extract match locations from a returned list of token matches
+ *
+ * @param {Tokens[][]|null} the tokens representing the match
+ * @param {matchCharsStr} an optional string containing characters to further filter the resulting locs.
+ *     Useful if tokens might contain extra characters besides just those we want to match
+ * @returns {Location[][]|null} The
+ */
 exports.locsFromTokens = (tokenMatches, matchCharsStr = null) => {
   if (!tokenMatches) return null;
   const matches = [];
@@ -159,7 +159,7 @@ exports.filterMatches = filterMatches;
 exports.excludeMatchesFromPattern = (sentence, pattern, matches) => {
   const patternMatches = pattern.match(sentence);
   if (!patternMatches) return matches;
-  return filterMatches(matches, match => {
+  return filterMatches(matches, (match) => {
     for (const patternMatch of patternMatches) {
       if (matchesOverlap(patternMatch, match)) {
         return false;
@@ -170,17 +170,17 @@ exports.excludeMatchesFromPattern = (sentence, pattern, matches) => {
 };
 
 /**
-* Does match A include all of match B?
-*
-* Returns true if B is completely contained by A, but false if the matches are identical
-*/
+ * Does match A include all of match B?
+ *
+ * Returns true if B is completely contained by A, but false if the matches are identical
+ */
 exports.matchAContainsMatchB = (matchA, matchB) => {
   const intersection = intersectMatches(matchA, matchB);
   return matchesEqual(intersection, matchB) && !matchesEqual(intersection, matchA);
 };
 
 exports.tokensFromMatch = (allTokens, match) =>
-  allTokens.filter(token => {
+  allTokens.filter((token) => {
     const tokenLoc = locFromToken(token);
     for (const loc of match) {
       if (locsOverlap(tokenLoc, loc)) return true;
@@ -189,21 +189,21 @@ exports.tokensFromMatch = (allTokens, match) =>
   });
 
 exports.stringsFromMatch = (originalSentence, match) =>
-  match.map(loc => originalSentence.slice(loc.start, loc.end));
+  match.map((loc) => originalSentence.slice(loc.start, loc.end));
 
 /**
-* Merge multiple groups of matches together
-*
-* @param {locMatchGroups} the list of matches to merge together
-* @param {conservative} a bool indicating whether in the event of overlapping matches
-*                       to use the intersection (true) or union (false)
-* @returns {Location[][]} The merged listed of matches
-*/
+ * Merge multiple groups of matches together
+ *
+ * @param {locMatchGroups} the list of matches to merge together
+ * @param {conservative} a bool indicating whether in the event of overlapping matches
+ *                       to use the intersection (true) or union (false)
+ * @returns {Location[][]} The merged listed of matches
+ */
 exports.mergeLocMatchGroups = (locMatchGroups, conservative = true) => {
   if (!locMatchGroups) return null;
   let mergedMatches = [];
   // NOTE: this has a bad big O. This can be improved if needed, but probably doesn't matter
-  for (const locMatchGroup of locMatchGroups.filter(x => x)) {
+  for (const locMatchGroup of locMatchGroups.filter((x) => x)) {
     for (const locMatch of locMatchGroup) {
       mergedMatches = appendOrMergeMatch(mergedMatches, locMatch, conservative);
     }

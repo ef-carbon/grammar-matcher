@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 
 import classes from './Header.scss';
 
-const Header = props => {
+const Header = (props) => {
   let input;
 
-  const onSubmit = evt => {
+  const onSubmit = (evt) => {
     evt.preventDefault();
-    const query = encodeURIComponent(input.value.replace(/\s+/gi, ''));
+    const query = encodeURIComponent(input.value.replace(/\s+/gi, ' '));
     const url = query ? `/query/${query}` : '/';
     props.history.push(url);
   };
@@ -20,7 +20,7 @@ const Header = props => {
       <div className="container">
         <div className="navbar-header">
           <Link className={classNames('navbar-brand', classes.logoText)} to="/">
-            Chinese Grammar Matcher
+            EF Hello Grammar Matcher Demo
           </Link>
         </div>
         <div className="navbar-collapse collapse">
@@ -34,7 +34,9 @@ const Header = props => {
                 type="text"
                 className={classNames('form-control', classes.grammarInput)}
                 placeholder="Enter a simplified Chinese sentence"
-                ref={ref => (input = ref)}
+                ref={(ref) => {
+                  input = ref;
+                }}
               />
             </div>
             <button type="submit" className="btn btn-default">

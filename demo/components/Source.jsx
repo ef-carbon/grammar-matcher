@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import classes from './Source.scss';
 
-const Source = props => {
+const Source = (props) => {
   const getUrl = () => {
-    if (props.type === 'website') return props.url;
+    if (props.type === 'website' || props.type === 'courseware') return props.url;
     if (props.type === 'book')
       return `https://isbnsearch.org/isbn/${props.isbn13 || props.isbn10}`;
     return null;
@@ -13,6 +13,7 @@ const Source = props => {
 
   const getText = () => {
     if (props.type === 'website') return props.name;
+    if (props.type === 'courseware') return props.url;
     if (props.type === 'book') return props.title;
     return null;
   };

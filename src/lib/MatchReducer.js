@@ -40,7 +40,7 @@ class MatchReducer {
       []
     );
     for (const matcherName of Object.keys(matchesMap)) {
-      const filteredMatches = matchesMap[matcherName].filter(match => {
+      const filteredMatches = matchesMap[matcherName].filter((match) => {
         for (const otherMatch of allMatches) {
           if (matchAContainsMatchB(otherMatch, match)) return false;
         }

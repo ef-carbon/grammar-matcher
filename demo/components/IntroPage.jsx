@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classes from './IntroPage.scss';
 
-const samples = ['晚上六点以后，有的人下班了，有的人在加班。', '尽管实现这个目标不太容易，但是我们不能这么快就放弃。'];
+const samples = ['If I save my money, I can buy an electric car next year.'];
 
 const IntroPage = ({ history }) => {
   let input;
 
-  const onSubmit = evt => {
+  const onSubmit = (evt) => {
     evt.preventDefault();
     const query = encodeURIComponent(input.value.replace(/\s+/gi, ''));
     const url = query ? `/query/${query}` : '/';
@@ -18,26 +18,23 @@ const IntroPage = ({ history }) => {
   return (
     <div className={classes.introOuterContainer}>
       <div className={classes.introContainer}>
-        <h1 className={classes.header}>Chinese Grammar Matcher</h1>
+        <h1 className={classes.header}>EF Hello Grammar Matcher Demo</h1>
         <p className={classes.introDescription}>
-          Enter a simplified Chinese sentence below and we&apos;ll explain the grammar
-          rules.
+          Enter a sentence below and we&apos;ll detect the grammar rules.
         </p>
         <form className={classes.sentenceInputContainer} onSubmit={onSubmit}>
-          <input className="form-control" ref={ref => (input = ref)} />
+          <input className="form-control" ref={(ref) => (input = ref)} />
           <button type="submit" className="btn btn-primary">
             Go
           </button>
         </form>
         <div className={classes.samples}>
           <span>Need inspiration? Try a sample sentence:</span>
-          {samples.map(sample =>
+          {samples.map((sample) => (
             <div key={sample} className={classes.sample}>
-              <Link to={`/query/${sample}`}>
-                {sample}
-              </Link>
+              <Link to={`/query/${sample}`}>{sample}</Link>
             </div>
-          )}
+          ))}
         </div>
       </div>
     </div>

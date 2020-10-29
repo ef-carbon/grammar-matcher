@@ -5,7 +5,7 @@ const SENTENCE_SPLIT_REGEX_BASE = '[.](?!\\d)|[!?]+|[。]|[！？]+';
 const SENTENCE_SPLIT_REGEX = new RegExp(`(${SENTENCE_SPLIT_REGEX_BASE})`, 'gui');
 const SENTENCE_PUNCT_MATCH_REGEX = new RegExp(`^${SENTENCE_SPLIT_REGEX_BASE}$`, 'gui');
 
-const preprocess = text => text.replace(/\s+/giu, '');
+const preprocess = (text) => text.replace(/\s+/, ' ');
 
 module.exports = class SentenceParser {
   constructor(nlpClient) {
@@ -15,7 +15,9 @@ module.exports = class SentenceParser {
   async parse(text) {
     const preprocessedText = preprocess(text);
     const parsedText = await this.nlpClient.parse(preprocessedText);
-    const tokens = parsedText.sentences[0].tokens.map(tokenData => new Token(tokenData));
+    const tokens = parsedText.sentences[0].tokens.map(
+      (tokenData) => new Token(tokenData)
+    );
     const rootToken = new Token({
       index: 0,
       word: '',
@@ -36,12 +38,12 @@ module.exports = class SentenceParser {
 
   async parseMulti(text) {
     const sentenceTexts = this.splitTextSentences(text);
-    return Promise.all(sentenceTexts.map(sentenceText => this.parse(sentenceText)));
+    return Promise.all(sentenceTexts.map((sentenceText) => this.parse(sentenceText)));
   }
 
   /**
-  * Given a string of text, split into an array of sentences in the text
-  */
+   * Given a string of text, split into an array of sentences in the text
+   */
   splitTextSentences(text) {
     const sentences = [];
     const splitText = text.split(SENTENCE_SPLIT_REGEX);

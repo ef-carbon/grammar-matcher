@@ -134,7 +134,12 @@ describe('graphMatch', () => {
       new Edge({ type: 'dobj' }, new Node({ filter: word('狗'), capture: true })),
     ]);
     const matches = graphMatch(fixtureSentence.tokens, matchTree);
-    expect(matches).toEqual([[{ start: 5, end: 7 }, { start: 13, end: 14 }]]);
+    expect(matches).toEqual([
+      [
+        { start: 5, end: 7 },
+        { start: 13, end: 14 },
+      ],
+    ]);
   });
 
   it('can match edges coming ahead or behind their parent', () => {
@@ -143,7 +148,12 @@ describe('graphMatch', () => {
       new Edge({ behind: true }, new Node({ filter: word('狗'), capture: true })),
     ]);
     const matches = graphMatch(fixtureSentence.tokens, matchingTree);
-    expect(matches).toEqual([[{ start: 5, end: 7 }, { start: 13, end: 14 }]]);
+    expect(matches).toEqual([
+      [
+        { start: 5, end: 7 },
+        { start: 13, end: 14 },
+      ],
+    ]);
 
     const failingTree = new Node({ filter: pos('V.') }, [
       new Edge({ behind: true }, new Node({ filter: word('狐狸'), capture: true })),
@@ -156,10 +166,18 @@ describe('graphMatch', () => {
     const matchTree = new Node({ filter: pos('V.') }, [
       new Edge({ type: 'nsubj' }, new Node({ filter: word('狐狸'), capture: true })),
       new Edge({ type: 'dobj' }, new Node({ filter: word('狗'), capture: true })),
-      new Edge({ type: 'non-existent', optional: true }, new Node({ filter: word('猫') })),
+      new Edge(
+        { type: 'non-existent', optional: true },
+        new Node({ filter: word('猫') })
+      ),
     ]);
     const matches = graphMatch(fixtureSentence.tokens, matchTree);
-    expect(matches).toEqual([[{ start: 5, end: 7 }, { start: 13, end: 14 }]]);
+    expect(matches).toEqual([
+      [
+        { start: 5, end: 7 },
+        { start: 13, end: 14 },
+      ],
+    ]);
   });
 
   it('can includes optional matches if possible', () => {
@@ -173,7 +191,11 @@ describe('graphMatch', () => {
     ]);
     const matches = graphMatch(fixtureSentence.tokens, matchTree);
     expect(matches).toEqual([
-      [{ start: 5, end: 7 }, { start: 9, end: 10 }, { start: 13, end: 14 }],
+      [
+        { start: 5, end: 7 },
+        { start: 9, end: 10 },
+        { start: 13, end: 14 },
+      ],
     ]);
   });
 });

@@ -12,7 +12,7 @@ class GrammarMatcher {
 
   async matchGrammar(text) {
     const sentences = await this.sentenceParser.parseMulti(text);
-    return sentences.map(sentence => this.matchReducer.reduceAndFormat(sentence));
+    return sentences.map((sentence) => this.matchReducer.reduceAndFormat(sentence));
   }
 }
 

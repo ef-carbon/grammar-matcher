@@ -7,13 +7,13 @@ const tf = require('./tokenFilters');
 
 const nlpClient = new CoreNLPClient(global.CORE_NLP_HOST);
 
-const parseSentences = async text => new SentenceParser(nlpClient).parseMulti(text);
-const parseSentence = async text => new SentenceParser(nlpClient).parse(text);
+const parseSentences = async (text) => new SentenceParser(nlpClient).parseMulti(text);
+const parseSentence = async (text) => new SentenceParser(nlpClient).parse(text);
 
-const assertAllExamplesMatch = async matcher => {
+const assertAllExamplesMatch = async (matcher) => {
   for (const example of matcher.examples) {
-    const sentences = await parseSentences(example.zh.replace(/[ABC]:/g, ''));
-    expect(matcher).toMatchSentence(sentences);
+    const sentence = await parseSentences(example.en);
+    expect(matcher).toMatchSentence(sentence);
   }
 };
 

@@ -17,20 +17,35 @@ describe('matchAContainsMatchB', () => {
     );
     expect(
       matchAContainsMatchB(
-        [{ start: 0, end: 2 }, { start: 4, end: 7 }],
-        [{ start: 1, end: 2 }, { start: 4, end: 7 }]
+        [
+          { start: 0, end: 2 },
+          { start: 4, end: 7 },
+        ],
+        [
+          { start: 1, end: 2 },
+          { start: 4, end: 7 },
+        ]
       )
     ).toEqual(true);
     expect(
       matchAContainsMatchB(
-        [{ start: 0, end: 2 }, { start: 4, end: 7 }],
+        [
+          { start: 0, end: 2 },
+          { start: 4, end: 7 },
+        ],
         [{ start: 0, end: 2 }]
       )
     ).toEqual(true);
     expect(
       matchAContainsMatchB(
-        [{ start: 1, end: 2 }, { start: 4, end: 7 }],
-        [{ start: 0, end: 2 }, { start: 4, end: 7 }]
+        [
+          { start: 1, end: 2 },
+          { start: 4, end: 7 },
+        ],
+        [
+          { start: 0, end: 2 },
+          { start: 4, end: 7 },
+        ]
       )
     ).toEqual(false);
   });
@@ -41,8 +56,14 @@ describe('matchAContainsMatchB', () => {
     );
     expect(
       matchAContainsMatchB(
-        [{ start: 0, end: 2 }, { start: 4, end: 7 }],
-        [{ start: 0, end: 2 }, { start: 4, end: 7 }]
+        [
+          { start: 0, end: 2 },
+          { start: 4, end: 7 },
+        ],
+        [
+          { start: 0, end: 2 },
+          { start: 4, end: 7 },
+        ]
       )
     ).toEqual(false);
   });
@@ -217,7 +238,12 @@ describe('locsFromTokens', () => {
 describe('mergeLocMatchGroups', () => {
   it('appends matches together if they dont overlap', () => {
     const match1 = [[{ start: 3, end: 4 }]];
-    const match2 = [[{ start: 8, end: 10 }, { start: 12, end: 15 }]];
+    const match2 = [
+      [
+        { start: 8, end: 10 },
+        { start: 12, end: 15 },
+      ],
+    ];
     expect(mergeLocMatchGroups([match1, match2])).toEqual([match1[0], match2[0]]);
   });
 
@@ -225,16 +251,27 @@ describe('mergeLocMatchGroups', () => {
     const match1 = [[{ start: 3, end: 4 }]];
     const match2 = [
       [{ start: 3, end: 4 }],
-      [{ start: 8, end: 10 }, { start: 12, end: 15 }],
+      [
+        { start: 8, end: 10 },
+        { start: 12, end: 15 },
+      ],
     ];
     expect(mergeLocMatchGroups([match1, match2])).toEqual([match1[0], match2[1]]);
   });
 
   it('ignores any nulls in the passed-in matches', () => {
-    const match1 = [[{ start: 2, end: 4 }, { start: 17, end: 22 }]];
+    const match1 = [
+      [
+        { start: 2, end: 4 },
+        { start: 17, end: 22 },
+      ],
+    ];
     const match2 = [
       [{ start: 3, end: 7 }],
-      [{ start: 8, end: 10 }, { start: 12, end: 15 }],
+      [
+        { start: 8, end: 10 },
+        { start: 12, end: 15 },
+      ],
     ];
     expect(mergeLocMatchGroups([match1, null, match2])).toEqual([
       [{ start: 3, end: 4 }],
@@ -251,10 +288,18 @@ describe('mergeLocMatchGroups', () => {
   });
 
   it('uses the intersection of overlapping matches by default', () => {
-    const match1 = [[{ start: 2, end: 4 }, { start: 17, end: 22 }]];
+    const match1 = [
+      [
+        { start: 2, end: 4 },
+        { start: 17, end: 22 },
+      ],
+    ];
     const match2 = [
       [{ start: 3, end: 7 }],
-      [{ start: 8, end: 10 }, { start: 12, end: 15 }],
+      [
+        { start: 8, end: 10 },
+        { start: 12, end: 15 },
+      ],
     ];
     expect(mergeLocMatchGroups([match1, match2])).toEqual([
       [{ start: 3, end: 4 }],
@@ -263,13 +308,24 @@ describe('mergeLocMatchGroups', () => {
   });
 
   it('uses the union of overlapping matches if conservative=false', () => {
-    const match1 = [[{ start: 2, end: 4 }, { start: 17, end: 22 }]];
+    const match1 = [
+      [
+        { start: 2, end: 4 },
+        { start: 17, end: 22 },
+      ],
+    ];
     const match2 = [
       [{ start: 3, end: 7 }],
-      [{ start: 8, end: 10 }, { start: 12, end: 15 }],
+      [
+        { start: 8, end: 10 },
+        { start: 12, end: 15 },
+      ],
     ];
     expect(mergeLocMatchGroups([match1, match2], false)).toEqual([
-      [{ start: 2, end: 7 }, { start: 17, end: 22 }],
+      [
+        { start: 2, end: 7 },
+        { start: 17, end: 22 },
+      ],
       match2[1],
     ]);
   });

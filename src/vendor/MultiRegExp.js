@@ -15,7 +15,7 @@ module.exports = function MultiRegExp(par) {
     }
     regex = new RegExp(exp, opts);
   }
-  var expandSource = function(braces, indexer) {
+  var expandSource = function (braces, indexer) {
     ret = '';
     for (var i = 0; i < braces.length; i++) {
       if (braces[i].type == 'raw') {
@@ -42,7 +42,7 @@ module.exports = function MultiRegExp(par) {
     return ret;
   };
 
-  var captureScan = function(braces, parent) {
+  var captureScan = function (braces, parent) {
     var containsCapture = false;
     for (var i = 0; i < braces.length; i++) {
       captureScan(braces[i].children, braces[i]);
@@ -59,7 +59,7 @@ module.exports = function MultiRegExp(par) {
     }
   };
 
-  var fillGaps = function(braces, text) {
+  var fillGaps = function (braces, text) {
     var pre = /^\((\?.)?/.exec(text);
     pre = pre == null ? '' : pre[0];
     var post = /\)$/.exec(text);
@@ -106,7 +106,7 @@ module.exports = function MultiRegExp(par) {
     }
   };
 
-  var GetBraces = function(text) {
+  var GetBraces = function (text) {
     var ret = [];
     var shift = 0;
     do {
@@ -124,7 +124,7 @@ module.exports = function MultiRegExp(par) {
     return ret;
   };
 
-  var GetBrace = function(text) {
+  var GetBrace = function (text) {
     var ret = { pos: -1, length: 0, text: '', children: [], type: 'brace' };
     var openExp = /^(?:\\.|[^\)\\\(])*\(\?./;
     var pre = 3;
@@ -172,7 +172,7 @@ module.exports = function MultiRegExp(par) {
     return ret.pos == -1 ? null : ret;
   };
 
-  var fixOrs = function(braces_W_raw) {
+  var fixOrs = function (braces_W_raw) {
     var orFind = /^(\\.|[^\\|])*\|/;
     for (var i = 0; i < braces_W_raw.length; i++) {
       if (braces_W_raw[i].type == 'raw') {
@@ -209,7 +209,7 @@ module.exports = function MultiRegExp(par) {
   fixOrs(braces);
   var indexer = {
     i: 1,
-    next: function(realPoint) {
+    next: function (realPoint) {
       if (realPoint) {
         this.points.push(this.i);
       }
@@ -224,7 +224,7 @@ module.exports = function MultiRegExp(par) {
     (regex.global ? 'g' : '') +
     (regex.multiline ? 'm' : '');
   this.regex = new RegExp(source, options);
-  this.exec = function(text) {
+  this.exec = function (text) {
     var m = this.regex.exec(text);
     if (m == null) {
       return {};

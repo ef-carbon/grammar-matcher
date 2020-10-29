@@ -35,7 +35,7 @@ const constructRegexStr = (tokens, regexTemplate, matchParams) => {
 };
 
 // used to match the generated regex template against
-const constructTokensStr = tokens => {
+const constructTokensStr = (tokens) => {
   let tokensStr = '';
   for (let i = 0; i < tokens.length; i += 1) {
     tokensStr += getTokenIdStr(i, tokens);
@@ -51,7 +51,7 @@ const getCapturedTokensFromMatch = (matchResults, tokens) => {
     // ignore those matches here. Revisit later if we find we want to keep the undefined, or
     // keep grouping each match by capture group regardless
     if (result === undefined) continue;
-    const tokenIndexStrs = result.split('#').filter(index => index !== '');
+    const tokenIndexStrs = result.split('#').filter((index) => index !== '');
     for (const tokenIndexStr of tokenIndexStrs) {
       matchingTokens.push(tokens[parseInt(tokenIndexStr, 10)]);
     }
@@ -77,12 +77,12 @@ const getCapturedLocsFromMatch = (multiMatchResults, startIndex) => {
 };
 
 /**
-* Match patterns of tokens using a regex
-* returns an array of tokens for each capture group match
-* ex: regexMatchTokens(tokens, '(:adv:):noPunc:*(:yijing:)', {adv: pos('adv'), noPunc, yijing: word('已经')})
-*
-* @returns {Tokens[][]|null} the capured tokens or null if no match was found
-*/
+ * Match patterns of tokens using a regex
+ * returns an array of tokens for each capture group match
+ * ex: regexMatchTokens(tokens, '(:adv:):noPunc:*(:yijing:)', {adv: pos('adv'), noPunc, yijing: word('已经')})
+ *
+ * @returns {Tokens[][]|null} the capured tokens or null if no match was found
+ */
 exports.regexMatchTokens = (tokens, regexTemplate, matchParams) => {
   const filteredTokens = tokens.filter(notRoot); // remove the root node from matches
   const tokensStr = constructTokensStr(filteredTokens);
@@ -98,11 +98,11 @@ exports.regexMatchTokens = (tokens, regexTemplate, matchParams) => {
 };
 
 /**
-* Match a raw string and retun an array of locations of each capture group match
-* ex: regexMatchLocs(text, /(已经).*(了)/)
-*
-* @returns {Tokens[][]|null} the capured match locations or null if no match was found
-*/
+ * Match a raw string and retun an array of locations of each capture group match
+ * ex: regexMatchLocs(text, /(已经).*(了)/)
+ *
+ * @returns {Tokens[][]|null} the capured match locations or null if no match was found
+ */
 exports.regexMatchLocs = (text, regex) => {
   const mainMatches = text.match(new RegExp(regex, 'gui'));
   if (!mainMatches) return null;

@@ -51,9 +51,9 @@ class Grammar extends React.Component {
     } = this.props;
     const { isExpanded } = this.state;
 
-    const exampleElms = examples.map((example, i) =>
+    const exampleElms = examples.map((example, i) => (
       <Example example={example} key={i} />
-    );
+    ));
 
     const examplesIconClasses = classNames(
       'fa',
@@ -80,15 +80,13 @@ class Grammar extends React.Component {
         <div className={classes.headerInfo}>
           <div>
             <div className={classes.structures}>
-              {structures.map(struct =>
+              {structures.map((struct) => (
                 <span className={classNames(classes.structure, 'badge')} key={struct}>
                   {struct}
                 </span>
-              )}
+              ))}
             </div>
-            <p>
-              {description}
-            </p>
+            <p>{description}</p>
           </div>
         </div>
 
@@ -102,18 +100,22 @@ class Grammar extends React.Component {
             <i className={examplesIconClasses} aria-hidden="true" /> Examples
           </a>
           <div className={classes.examples} style={exampleContainerStyle}>
-            <div ref={ref => (this.exSizer = ref)}>
+            <div
+              ref={(ref) => {
+                this.exSizer = ref;
+              }}
+            >
               {exampleElms}
             </div>
           </div>
         </div>
         <div className={classes.sources}>
           <span className={classes.learnMoreLabel}>Learn more:</span>
-          {sources.map((source, i) =>
+          {sources.map((source, i) => (
             <span key={i} className={classes.source}>
               <Source {...source} />
             </span>
-          )}
+          ))}
         </div>
       </div>
     );

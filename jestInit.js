@@ -14,12 +14,12 @@ expect.extend({
         pass = true;
       }
     }
-    const original = sentences.map(sentence => sentence.original).join(' :: ');
+    const original = sentences.map((sentence) => sentence.original).join(' :: ');
     return {
       pass: pass,
-      message: `expected ${received.name} ${this.isNot
-        ? 'not '
-        : ''}to match: ${original}`,
+      message: `expected ${received.name} ${
+        this.isNot ? 'not ' : ''
+      }to match: ${original}`,
     };
   },
 });

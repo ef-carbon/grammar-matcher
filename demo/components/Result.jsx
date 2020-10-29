@@ -28,7 +28,7 @@ class Result extends React.Component {
   }
 
   render() {
-    const grammar = this.props.result.grammar.map(grammarMatch =>
+    const grammar = this.props.result.grammar.map((grammarMatch) => (
       <div className={classes.grammar} key={grammarMatch.id}>
         <Grammar
           onMouseEnter={() => this.setState({ highlightGrammar: [grammarMatch] })}
@@ -37,12 +37,12 @@ class Result extends React.Component {
           {...grammarMatch}
         />
       </div>
-    );
+    ));
 
     return (
       <StickyContainer className={classes.result}>
         <Sticky topOffset={-60} bottomOffset={60}>
-          {({ style }) =>
+          {({ style }) => (
             <div
               style={{ ...style, top: style.top + 60 }}
               className={classes.headerPositioner}
@@ -53,7 +53,8 @@ class Result extends React.Component {
                   highlightLocations={this.getHighlightLocs()}
                 />
               </div>
-            </div>}
+            </div>
+          )}
         </Sticky>
         <div className={classNames('container', classes.grammarResults)}>
           {grammar.length > 0 ? grammar : <p>No grammar matches found</p>}

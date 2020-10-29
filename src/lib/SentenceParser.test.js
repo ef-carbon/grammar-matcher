@@ -232,9 +232,8 @@ describe('splitTextSentences', () => {
   });
 
   it('should preserve multiple ! and ? in sentences', () => {
-    expect(parser.splitTextSentences('這是第一個句子！？！？ 這是第2.5個句子!!!')).toEqual([
-      '這是第一個句子！？！？',
-      '這是第2.5個句子!!!',
-    ]);
+    expect(
+      parser.splitTextSentences('這是第一個句子！？！？ 這是第2.5個句子!!!')
+    ).toEqual(['這是第一個句子！？！？', '這是第2.5個句子!!!']);
   });
 });

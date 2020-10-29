@@ -20,11 +20,11 @@ class ResultsPage extends React.Component {
   }
 
   componentWillMount() {
-    this.runQuery(this.props.match.params.query);
+    this.runQuery(decodeURIComponent(this.props.match.params.query));
   }
 
   componentWillReceiveProps({ match }) {
-    const { query } = match.params;
+    const query = decodeURIComponent(match.params.query);
     if (this.state.query !== query) {
       this.runQuery(query);
     }
@@ -35,12 +35,12 @@ class ResultsPage extends React.Component {
     const matcher = new GrammarMatcher();
     matcher
       .matchGrammar(query)
-      .then(results => {
+      .then((results) => {
         // make sure there's no out-of-order results loading
         if (this.state.query !== query) return;
         this.setState({ loading: false, results, highlightGrammar: [] });
       })
-      .catch(err => {
+      .catch((err) => {
         // eslint-disable-next-line no-console
         console.log(err);
         this.setState({ loading: false, error: err, results: null });
@@ -61,15 +61,15 @@ class ResultsPage extends React.Component {
   }
 
   renderResults() {
-    return this.state.results.map((result, i) =>
+    return this.state.results.map((result, i) => (
       <Result result={result} key={`${i}-${result.text}`} />
-    );
+    ));
   }
 
   render() {
     return (
       <div>
-        <Header query={this.props.match.params.query} />
+        <Header query={decodeURIComponent(this.props.match.params.query)} />
         <div className={classes.content}>
           {this.state.loading ? this.renderSpinner() : null}
           {this.state.results ? this.renderResults() : null}

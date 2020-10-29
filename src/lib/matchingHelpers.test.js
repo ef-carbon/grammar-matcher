@@ -81,6 +81,8 @@ describe('regexMatchLocs', () => {
   });
 
   test('it collapses adjacent match positions', () => {
-    expect(regexMatchLocs('你好你好。', /(你好).*(你好)/)).toEqual([[{ start: 0, end: 4 }]]);
+    expect(regexMatchLocs('你好你好。', /(你好).*(你好)/)).toEqual([
+      [{ start: 0, end: 4 }],
+    ]);
   });
 });

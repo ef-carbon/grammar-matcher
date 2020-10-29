@@ -51,10 +51,10 @@ const run = () => {
   console.log(`Moving ${oldTestFile} to ${newTestFile}`);
   fs.renameSync(oldTestFile, newTestFile);
   console.log('Rewriting test contents');
-  rewriteFileContents(newTestFile, testContents =>
+  rewriteFileContents(newTestFile, (testContents) =>
     testContents.replace(new RegExp(oldName, 'gu'), newName)
   );
   console.log('Rewriting index');
-  rewritePatternIndex(indexContents => indexContents.replace(oldRequire, newRequire));
+  rewritePatternIndex((indexContents) => indexContents.replace(oldRequire, newRequire));
 };
 run();
